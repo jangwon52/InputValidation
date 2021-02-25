@@ -16,7 +16,7 @@ import com.mongoose.inputvalidation.R
  *  ClearEditText.kt
  *
  *  Created by jangwon on 2021/02/25
- *  Copyright © 2020 Shinhan Bank. All rights reserved.
+ *
  */
 
 class ClearEditText @JvmOverloads constructor(
