@@ -1,6 +1,7 @@
 package com.mongoose.inputvalidation.ui.login
 
 import android.text.TextUtils
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -9,6 +10,9 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 class LoginViewModel : ViewModel() {
 
     private val disposables = CompositeDisposable()
+
+    private val _isButtonEnabled = MutableLiveData<Boolean>()
+    val isButtonEnabled = _isButtonEnabled
 
     override fun onCleared() {
         super.onCleared()
@@ -22,9 +26,9 @@ class LoginViewModel : ViewModel() {
             Observable.combineLatest(
                 isNameValid(),
                 isPasswordValid(),
-                { a: Any, b: Any -> "biFun call $a, $b" }
-            ).subscribe { v: String ->
-                println("Combined latest: $v")
+                { isNameValid: Boolean, isPasswordValid: Boolean -> isNameValid && isPasswordValid }
+            ).subscribe { isValid: Boolean ->
+                _isButtonEnabled.value = isValid
             }
         )
     }
